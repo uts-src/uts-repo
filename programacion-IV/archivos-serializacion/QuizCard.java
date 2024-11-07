@@ -1,6 +1,6 @@
-package ch16;
+import java.io.Serializable;
 
-public class QuizCard {
+public class QuizCard implements Serializable{
   private final String question;
   private final String answer;
 

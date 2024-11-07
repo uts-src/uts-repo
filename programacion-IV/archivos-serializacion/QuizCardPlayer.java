@@ -1,5 +1,3 @@
-package ch16;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -19,8 +17,10 @@ public class QuizCardPlayer {
     reader.go();
   }
 
+
   public void go() {
     frame = new JFrame("Quiz Card Player");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JPanel mainPanel = new JPanel();
     Font bigFont = new Font("sanserif", Font.BOLD, 24);
 
@@ -34,17 +34,20 @@ public class QuizCardPlayer {
     scroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     mainPanel.add(scroller);
 
-    nextButton = new JButton("Show Question");
+    nextButton = new JButton("Mostrar preguntas");
     nextButton.addActionListener(e -> nextCard());
     mainPanel.add(nextButton);
 
     JMenuBar menuBar = new JMenuBar();
-    JMenu fileMenu = new JMenu("File");
+    JMenu fileMenu = new JMenu("Archivos");
 
-    JMenuItem loadMenuItem = new JMenuItem("Load card set");
+    JMenuItem loadMenuItem = new JMenuItem("Cargar archivo de texto");
+    JMenuItem loadBinaryMenuItem = new JMenuItem("Cargar archivo Binario");
     loadMenuItem.addActionListener(e -> open());
+    loadBinaryMenuItem.addActionListener(e -> openBinary());
 
     fileMenu.add(loadMenuItem);
+    fileMenu.add(loadBinaryMenuItem);
     menuBar.add(fileMenu);
     frame.setJMenuBar(menuBar);
 
@@ -75,6 +78,31 @@ public class QuizCardPlayer {
     JFileChooser fileOpen = new JFileChooser();
     fileOpen.showOpenDialog(frame);
     loadFile(fileOpen.getSelectedFile());
+  }
+
+  private void openBinary(){
+    JFileChooser fileOpen = new JFileChooser();
+    fileOpen.showOpenDialog(frame);
+    loadBinaryFile(fileOpen.getSelectedFile());
+  }
+
+  @SuppressWarnings("unchecked")
+  private void loadBinaryFile(File file){
+    cardList = new ArrayList<>();
+    try {
+      FileInputStream fi = new FileInputStream(file); //permite operar con un flujo(stream) de Bytes desde un archivo.
+      ByteArrayInputStream bis = new ByteArrayInputStream(fi.readAllBytes());// lee un array de bytes para crear y almacenar un flujo(stream) de bytes 
+      fi.close();
+      ObjectInputStream oi = new ObjectInputStream(bis);// lee un stream de bytes para deserializar un objeto.
+
+      cardList = (ArrayList<QuizCard>) oi.readObject(); //creacion del objeto.
+
+      oi.close();
+      
+      
+    } catch (IOException | ClassNotFoundException e) {
+      System.out.println("Couldn't write the cardList out: " + e.getMessage());
+    }
   }
 
   private void loadFile(File file) {
@@ -109,7 +137,3 @@ public class QuizCardPlayer {
     isShowAnswer = true;
   }
 }
-      
-
-
-

@@ -1,11 +1,9 @@
-package ch16;
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
-public class QuizCardBuilder {
+public class QuizCardBuilder{
   private ArrayList<QuizCard> cardList = new ArrayList<>();
   private JTextArea question;
   private JTextArea answer;
@@ -17,6 +15,7 @@ public class QuizCardBuilder {
 
   public void go() {
     frame = new JFrame("Quiz Card Builder");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JPanel mainPanel = new JPanel();
     Font bigFont = new Font("sanserif", Font.BOLD, 24);
 
@@ -39,14 +38,18 @@ public class QuizCardBuilder {
     JMenuBar menuBar = new JMenuBar();
     JMenu fileMenu = new JMenu("File");
 
-    JMenuItem newMenuItem = new JMenuItem("New");
+    JMenuItem newMenuItem = new JMenuItem("Nuevo");
     newMenuItem.addActionListener(e -> clearAll());
 
-    JMenuItem saveMenuItem = new JMenuItem("Save");
+    JMenuItem saveMenuItem = new JMenuItem("Guardar Archivo");
     saveMenuItem.addActionListener(e -> saveCard());
+
+    JMenuItem saveBinarioItem = new JMenuItem("Guardar Archivo Binario");
+    saveBinarioItem.addActionListener(e -> saveSerializeCard());
 
     fileMenu.add(newMenuItem);
     fileMenu.add(saveMenuItem);
+    fileMenu.add(saveBinarioItem);
     menuBar.add(fileMenu);
     frame.setJMenuBar(menuBar);
 
@@ -77,12 +80,23 @@ public class QuizCardBuilder {
   }
 
   private void saveCard() {
+    JFileChooser fileSave = preSaveCard();
+    saveFile(fileSave.getSelectedFile());
+  }
+
+  private void saveSerializeCard() {
+    JFileChooser fileSave = preSaveCard();
+    saveSerializeFile(fileSave.getSelectedFile());
+  }
+
+  private JFileChooser preSaveCard() {
     QuizCard card = new QuizCard(question.getText(), answer.getText());
     cardList.add(card);
 
     JFileChooser fileSave = new JFileChooser();
     fileSave.showSaveDialog(frame);
-    saveFile(fileSave.getSelectedFile());
+
+    return fileSave;
   }
 
   private void clearAll() {
@@ -108,9 +122,22 @@ public class QuizCardBuilder {
       System.out.println("Couldn't write the cardList out: " + e.getMessage());
     }
   }
+
+  private void saveSerializeFile(File file){
+    try {
+      FileOutputStream f = new FileOutputStream(file); //flujo(stream) de Bytes a un archivo.
+      ByteArrayOutputStream bos = new ByteArrayOutputStream(); // Almacena un flujo(stream) de bytes.
+      ObjectOutputStream o = new ObjectOutputStream(bos);// donde almacenar el flujo de bytes del objeto/objetos.
+      o.writeObject(cardList); // serializar objetos en un flujo de bytes.
+      o.close();
+
+      byte[] serializedBytes = bos.toByteArray(); //flujo(stream) de Bytes a un array de bytes
+      
+      f.write(serializedBytes); //escribir el array de bytes al archivo
+      f.close();
+    } catch (IOException e) {
+      System.out.println("Couldn't write the cardList out: " + e.getMessage());
+    }
+  }
+  
 }
-       
-           
-          
-          
-       

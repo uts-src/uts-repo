@@ -120,19 +120,19 @@ public class GuiFiles {
         busqueda = new JFileChooser();
 
         // Eventos:
-        agregar.addActionListener(_ -> {
+        agregar.addActionListener(e -> {
             agregarACombo();
         });
-        guardar_texto.addActionListener(_ -> {
+        guardar_texto.addActionListener(e -> {
             iniciarGuardarArchivoTexto();
         });
-        guardar_serializado.addActionListener(_ -> {
+        guardar_serializado.addActionListener(e -> {
             iniciarGuardarArchivoSerializado();
         });
-        cargar_texto.addActionListener(_ -> {
+        cargar_texto.addActionListener(e -> {
             iniciarCargarArchivoTexto();
         });
-        cargar_serializado.addActionListener(_ -> {
+        cargar_serializado.addActionListener(e -> {
             iniciarCargarArchivoSerializado();
         });
 

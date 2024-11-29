@@ -76,14 +76,14 @@ public class EstructurasDeDatos {
             System.out.println("\nEl ArrayList esta vacio");
         }
 
-        System.out.print("--------------");
+        System.out.println("--------------");
         ArrayList<Persona> personas = new ArrayList<>(); //Se crea un arrayList que almacenará objetos de tipo Persona
         personas.add(new Persona("Pepe",25)); // Se Crea un objeto Persona y se agrega como primer elemento del
                                                        // ArrayList
         personas.add(new Persona("Rosa",44)); // Segundo Objeto Persona creado y agregado al ArrayList
         personas.add(new Persona("Esteban",30)); // Tercer Objeto Persona creado y agregado al ArrayList
 
-        System.err.println();
+        System.out.println("Imprimiendo datos de un ArrayList que contiene Objetos de tipo Persona:");
         personas.forEach(persona->{
             System.out.println(persona.nombre+" "+persona.edad); // imprimir los objetos Persona del ArrayList
         });

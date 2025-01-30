@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Stream;
+import java.util.Optional;
 
 public class Main {
 
@@ -54,7 +55,9 @@ public class Main {
         System.out.println("\n\n----Streams con datos tipo texto");
 
         String concatenados = nombres.stream().reduce("",String::concat);
+        Optional <String> concatenados_2 = nombres.stream().reduce((str1,str2)->str1+"-"+str2);
         System.out.println("texto concatenado :"+ concatenados);
+        System.out.println("texto concatenado nuevamente :"+ concatenados_2.get());
 
         System.out.print("\nnombres ordenados naturalmente: ");
         nombres.stream().sorted(Comparator.naturalOrder()).forEach(n -> System.out.print(n + " "));
@@ -66,9 +69,9 @@ public class Main {
         nombres.stream().map(n -> n.toUpperCase()).forEach(System.out::println);
 
         System.out.print("\nnombres filtrados: \n");
-        nombres.stream().filter(n -> n.startsWith("L")).forEach(System.out::println);
+        nombres.stream().filter(n -> n.endsWith("a")).forEach(System.out::println);
 
-        System.out.print("\nnumeros no repetidos: \n");
+        System.out.print("\nnombres no repetidos: \n");
         nombres.stream().distinct().forEach(n -> System.out.print(n+" "));
         
         

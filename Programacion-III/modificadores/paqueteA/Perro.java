@@ -1,8 +1,10 @@
 package paqueteA;
 
-public class Perro extends Animal{
-    public void setAtributos (){
-        atr_publico = 1000;
-        atr_protegido = 1000;
+public class Perro extends Caninos{
+
+    public Perro(){
+        super("firulais",3.0f,"Pastor Alemán");
+        nombre_animal = "flofi";
+        peso_kg = 5;
     }
 }

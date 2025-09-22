@@ -2,8 +2,10 @@ package paqueteB;
 import paqueteA.Animal;
 
 public class Mono extends Animal{
-    public void setAtributos(){
-        atr_publico = 1000;
-        atr_protegido = 1000;
+
+    public Mono(){
+        super("Chango",5);
+        nombre_animal = "Chango2";
+        peso_kg = 6;
     }
 }

@@ -19,6 +19,11 @@ public class LeerEscribirArchivos {
         archivos.guardarArchivo(rutaArchivo, data);
         System.out.println("\nLeyendo archivo");
         archivos.leerArchivo(rutaArchivo);
+        
+        System.out.println("desea borrar el archivo? si(s)");
+        if (input.nextLine().equals("s")) {
+            archivos.borrarArchivo(rutaArchivo);    
+        }
         input.close();
     }
 
@@ -43,5 +48,16 @@ public class LeerEscribirArchivos {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean borrarArchivo(String rutaArchivo){
+        Path ruta = Paths.get(rutaArchivo);
+        boolean exito = false;
+        try {
+          exito = Files.deleteIfExists(ruta);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return exito;
     }
 }

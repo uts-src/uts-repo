@@ -10,4 +10,9 @@ class Persona {
     String hola() {
         return "hola soy una Persona";
     }
+
+    @Override
+    public String toString(){
+        return "{nombre: "+nombre+", edad: "+edad+"}";
+    }
 }

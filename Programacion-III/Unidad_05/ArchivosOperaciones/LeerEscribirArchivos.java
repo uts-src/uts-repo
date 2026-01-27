@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class LeerEscribirArchivos {
 
@@ -17,8 +18,10 @@ public class LeerEscribirArchivos {
         LeerEscribirArchivos archivos = new LeerEscribirArchivos();
         String rutaArchivo = "archivo.txt";
         archivos.guardarArchivo(rutaArchivo, data);
+        ArrayList<String> lineas = archivos.leerArchivo(rutaArchivo);
+        
         System.out.println("\nLeyendo archivo");
-        archivos.leerArchivo(rutaArchivo);
+        lineas.forEach(linea->{System.out.println(linea);});
         
         System.out.println("desea borrar el archivo? si(s)");
         if (input.nextLine().equals("s")) {
@@ -37,17 +40,19 @@ public class LeerEscribirArchivos {
         }
     }
 
-    private void leerArchivo(String rutaArchivo) {
+    private ArrayList<String> leerArchivo(String rutaArchivo) {
         Path ruta = Paths.get(rutaArchivo);
+        ArrayList<String> lineas = new ArrayList<>(); 
         try (BufferedReader reader = Files.newBufferedReader(ruta)) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                lineas.add(line);
             }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return lineas;
     }
 
     private boolean borrarArchivo(String rutaArchivo){
